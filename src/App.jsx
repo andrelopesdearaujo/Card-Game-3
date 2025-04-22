@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const dares = [
-  // Posições Picantes
   { category: "Posições", text: "Fique de quatro e diga o que você quer que façam com seu cu. Se não fizer, beba." },
   { category: "Posições", text: "Monte no parceiro(a) como se fosse uma cavalgada selvagem. Se não fizer, beba." },
   { category: "Posições", text: "Fique deitado(a) com as pernas abertas e mande o parceiro(a) 'explorar'. Se não fizer, beba." },
@@ -17,8 +16,6 @@ const dares = [
   { category: "Posições", text: "Faça a posição 'de ladinho', encostado(a), e diga o que faria. Se não fizer, beba." },
   { category: "Posições", text: "Faça a posição 'sentado(a) em cima da cara' (só a pose!). Se não fizer, beba." },
   { category: "Posições", text: "Recrie com o parceiro(a) a posição 69 sem encostar. Se não fizer, beba." },
-
-  // Brinquedos e Estímulos
   { category: "Brinquedos", text: "Pegue um brinquedo e brinque com ele por 60 segundos. Se não fizer, beba." },
   { category: "Brinquedos", text: "Coloque um plug anal e fique com ele por duas rodadas. Se não fizer, beba." },
   { category: "Brinquedos", text: "Use um vibrador no seu corpo e diga o que está sentindo. Se não fizer, beba." },
@@ -34,8 +31,6 @@ const dares = [
   { category: "Brinquedos", text: "Provoque o parceiro(a) com um brinquedo entre as pernas. Se não fizer, beba." },
   { category: "Brinquedos", text: "Faça uma 'dança do brinquedo' com trilha sonora imaginária. Se não fizer, beba." },
   { category: "Brinquedos", text: "Invente um nome sexy para um dos seus brinquedos. Se não fizer, beba." },
-
-  // Interação com Parceiro(a)
   { category: "Contato", text: "Lamba o mamilo do seu parceiro(a) por 30 segundos. Se não fizer, beba." },
   { category: "Contato", text: "Morda ou chupe o pescoço do seu parceiro(a). Se não fizer, beba." },
   { category: "Contato", text: "Toque o cu do seu parceiro(a) com carinho ou safadeza. Se não fizer, beba." },
@@ -46,8 +41,6 @@ const dares = [
   { category: "Contato", text: "Deixe o parceiro(a) te cheirar todinho(a). Se não deixar, beba." },
   { category: "Contato", text: "Lamba lentamente a parte interna da coxa do parceiro(a). Se não fizer, beba." },
   { category: "Contato", text: "Beije o parceiro(a) com as mãos presas atrás das costas. Se não fizer, beba." },
-
-  // Fantasias e Palavras
   { category: "Fantasias", text: "Descreva uma fantasia que nunca contou a ninguém. Se não contar, beba." },
   { category: "Fantasias", text: "Imite um personagem de filme pornô e seduza o parceiro(a). Se não fizer, beba." },
   { category: "Fantasias", text: "Faça um monólogo safado como se estivesse numa webcam. Se não fizer, beba." },
@@ -58,8 +51,6 @@ const dares = [
   { category: "Fantasias", text: "Imite alguém te dando um oral e narre a sensação. Se não fizer, beba." },
   { category: "Fantasias", text: "Diga como seria um dia inteiro de sexo com o parceiro(a). Se não disser, beba." },
   { category: "Fantasias", text: "Narre como seria um pornô estrelado por vocês dois. Se não narrar, beba." },
-dares.push(
-  // Filmagens e Fotos
   { category: "Filmagem", text: "Tire uma selfie pelado(a) e envie só depois do jogo. Se não tirar, beba." },
   { category: "Filmagem", text: "Filme-se rebolando e mande pro parceiro(a). Se não filmar, beba." },
   { category: "Filmagem", text: "Tire uma foto de você com cara de safado(a). Se não fizer, beba." },
@@ -71,7 +62,6 @@ dares.push(
   { category: "Filmagem", text: "Grave uma 'mensagem quente' de voz pro parceiro(a). Se não gravar, beba." },
   { category: "Filmagem", text: "Tire uma foto com algum brinquedo encostando no corpo. Se não fizer, beba." },
 
-  // Pornô Temático
   { category: "Pornô", text: "Veja uma cena de pegging e diga se teria coragem. Se não fizer, beba." },
   { category: "Pornô", text: "Veja uma cena de dominação feminina e diga o que curtiu. Se não fizer, beba." },
   { category: "Pornô", text: "Veja uma cena de bondage intensa e diga o que te excitou. Se não fizer, beba." },
@@ -83,7 +73,6 @@ dares.push(
   { category: "Pornô", text: "Assista a um pornô com dildo duplo e descreva a sensação. Se não quiser, beba." },
   { category: "Pornô", text: "Veja um vídeo com enredo bizarro e diga se continuaria vendo. Se não quiser, beba." },
 
-  // Mini Games e Desafios
   { category: "Mini Jogo", text: "Jogue par ou ímpar: quem perder tira a cueca ou calcinha." },
   { category: "Mini Jogo", text: "Role um número: se for par, beije; se for ímpar, chupe. Se recusar, beba." },
   { category: "Mini Jogo", text: "Façam uma batalha de gemidos. Quem rir, bebe." },
@@ -104,19 +93,32 @@ dares.push(
   { category: "Mini Jogo", text: "Rabisque algo safado no corpo do outro com o dedo. Se não fizer, beba." },
   { category: "Mini Jogo", text: "Dance no colo do parceiro(a) sem música. Se não fizer, beba." },
   { category: "Mini Jogo", text: "Fique em silêncio por uma rodada inteira gemendo só com os olhos. Se não fizer, beba." }
-);
+];
 
-
-
-
+function shuffle(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
 
 function App() {
+  const [shuffledDares, setShuffledDares] = useState([]);
   const [index, setIndex] = useState(0);
-  const current = dares[index];
+
+  useEffect(() => {
+    setShuffledDares(shuffle(dares));
+  }, []);
 
   const nextCard = () => {
-    setIndex((prev) => (prev + 1) % dares.length);
+    setIndex((prev) => (prev + 1) % shuffledDares.length);
   };
+
+  if (shuffledDares.length === 0) return <p style={{ color: '#fff' }}>Carregando cartas...</p>;
+
+  const current = shuffledDares[index];
 
   return (
     <div style={{
