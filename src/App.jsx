@@ -51,7 +51,7 @@ const dares = [
   { text: "Esfrega os seios ou o peito no rosto do outro." },
   { text: "Senta no colo do outro e esfrega sem tirar." },
   { text: "Enfia os dedos onde for e mantém o olhar fixo." },
-  { text: "Tira uma nude com a raba empinada e guarda." },
+    { text: "Tira uma nude com a raba empinada e guarda." },
   { text: "Filme-se rebolando de costas." },
   { text: "Tira uma selfie pelado(a) de corpo todo." },
   { text: "Grava teu gemido real e salva." },
@@ -124,12 +124,12 @@ function App() {
     setIndex((prev) => (prev + 1) % shuffledDares.length);
   };
 
-  if (shuffledDares.length === 0) return <p style={'{'} color: "#fff" {'}'}>Carregando cartas...</p>;
+  if (shuffledDares.length === 0) return <p style={{ color: "#fff" }}>Carregando cartas...</p>;
 
   const current = shuffledDares[index];
 
   return (
-    <div style={'{'}
+    <div style={{
       backgroundColor: "#000",
       color: "#fff",
       minHeight: "100vh",
@@ -137,28 +137,28 @@ function App() {
       justifyContent: "center",
       alignItems: "center",
       padding: 16
-    {'}'}>
-      <div style={'{'}
+    }}>
+      <div style={{
         backgroundColor: "#1e1e1e",
         padding: 24,
         borderRadius: 16,
         maxWidth: 400,
         width: "100%",
         textAlign: "center"
-      {'}'}>
-        <p style={'{'}
+      }}>
+        <p style={{
           fontSize: 18,
           fontStyle: "italic",
           marginBottom: 24
-        {'}'}>{'{'}current.text{'}'}</p>
-        <button onClick={'{'}nextCard{'}'} style={'{'}
+        }}>{current.text}</p>
+        <button onClick={nextCard} style={{
           backgroundColor: "#ec4899",
           color: "#fff",
           padding: "12px 24px",
           border: "none",
           borderRadius: 8,
           cursor: "pointer"
-        {'}'}>
+        }}>
           Próxima Carta
         </button>
       </div>
@@ -167,3 +167,4 @@ function App() {
 }
 
 export default App;
+
